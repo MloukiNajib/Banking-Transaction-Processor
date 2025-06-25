@@ -45,6 +45,8 @@
     public static List<Transaction> GenerateLargeTransactionBatch(int count)
     {
         var transactions = new List<Transaction>();
+        var now = DateTime.Now; // Évite d'appeler DateTime.Now à chaque itération
+
         for (int i = 0; i < count; i++)
         {
             transactions.Add(new Transaction
@@ -52,7 +54,7 @@
                 TransactionId = $"TXN_{i:0000}",
                 Amount = (decimal)(_random.NextDouble() * 1000),
                 Currency = _currencies[_random.Next(_currencies.Length)],
-                Timestamp = DateTime.Now.AddMinutes(-_random.Next(1440)),
+                Timestamp = now.AddMinutes(-_random.Next(1440)),
                 AccountFrom = $"FR{_random.NextInt64(1000000000, 9999999999)}",
                 AccountTo = $"FR{_random.NextInt64(1000000000, 9999999999)}"
             });

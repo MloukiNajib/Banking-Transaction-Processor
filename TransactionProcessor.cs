@@ -26,65 +26,31 @@ private static readonly Dictionary<string, decimal> _exchangeRates = new()
     // Optimisation pour les gros lots
     public List<Transaction> ProcessTransactions(List<Transaction> transactions)
 {
-        // 1- Pré-filtrage parallèle des transactions invalides
+        if(transactions == null || transactions.Count == 0)
+            return new List<Transaction>();
+
+        // Utilisation de HashSet pour la détection des doublons en O(1)
+        var seenIds = new ConcurrentDictionary<string, byte>();
+
+        // Filtrage et validation en parallèle
         var validTransactions = transactions
             .AsParallel()
-            .Where(tx => tx.Amount > 0)
-            .GroupBy(tx => tx.TransactionId)
-            .Select(g => g.First())
+            .Where(tx =>
+                tx != null &&
+                tx.Amount > 0 &&
+                seenIds.TryAdd(tx.TransactionId, 0))
             .ToList();
 
-        // 2- Conversion parallèle
-        var result = new ConcurrentBag<Transaction>();
-        Parallel.ForEach(validTransactions, tx =>
+        // Conversion en euros avec pré-allocation de la capacité
+        var result = new Transaction[validTransactions.Count];
+        Parallel.For(0, validTransactions.Count, i =>
         {
-            result.Add(tx.Currency == "EUR" ? tx : CreateEuroTransaction(tx));
+            var tx = validTransactions[i];
+            result[i] = tx.Currency == "EUR" ? tx : CreateEuroTransaction(tx);
         });
 
         return result.ToList();
     }
-
-private List<Transaction> ValidateTransactions(List<Transaction> transactions)
-{
-    var validTransactions = new List<Transaction>(transactions.Count);
-    var duplicateIds = new HashSet<string>();
-
-    foreach (var tx in transactions)
-    {
-        if (duplicateIds.Contains(tx.TransactionId))
-        {
-            continue;
-        }
-
-        if (tx.Amount <= 0)
-        {
-            continue;
-        }
-
-        duplicateIds.Add(tx.TransactionId);
-        validTransactions.Add(tx);
-    }
-
-    return validTransactions;
-}
-
-private List<Transaction> ConvertTransactionsToEuros(List<Transaction> validTransactions)
-{
-    /*** Initialisation des listes avec capacité
-     * new List<Transaction>(transactions.Count) réduit les réallocations
-     * Visible dans la réduction de l'allocation mémoire
-     */
-    var processedTransactions = new List<Transaction>(validTransactions.Count);
-
-    foreach (var tx in validTransactions)
-    {
-        processedTransactions.Add(tx.Currency == "EUR"
-            ? tx
-            : CreateEuroTransaction(tx));
-    }
-
-    return processedTransactions;
-}
 
 private Transaction CreateEuroTransaction(Transaction original)
 {
