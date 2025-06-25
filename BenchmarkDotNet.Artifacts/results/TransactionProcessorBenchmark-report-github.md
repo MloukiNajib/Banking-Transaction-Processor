@@ -41,6 +41,7 @@ Job=.NET 9.0  Runtime=.NET 9.0
 - ⚠️ Légère surcharge mémoire pour les gros lots
 
 ## 🛠️ Impact des Optimisations
+
 ```
 | Optimisation                          | Bénéfice Mesuré                          |
 |---------------------------------------|------------------------------------------|
@@ -48,9 +49,11 @@ Job=.NET 9.0  Runtime=.NET 9.0
 | `Dictionary` pour les taux de change  | Recherche O(1) + meilleure maintenabilité|
 | Pré-allocation des listes             | Réduction des réallocations mémoire      |
 ```
+
 ## 🚀 Recommandations
 
 ### Optimisation Parallèle (Exemple)
+
 ```csharp
 public List<Transaction> ProcessTransactions(List<Transaction> transactions)
 {
@@ -69,12 +72,13 @@ public List<Transaction> ProcessTransactions(List<Transaction> transactions)
     
     return result.ToList();
 }
-```
+
+
 Autres Pistes
    🏊 Pooling mémoire : Utiliser ArrayPool<Transaction>
    ⏱️ Benchmarks complémentaires :
         
-        ```csharp
+     ``èè
         [Params(10, 100, 1000, 10000)] 
         public int BatchSize { get; set; }
         ```
