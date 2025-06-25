@@ -1,5 +1,4 @@
-﻿```
-
+﻿
 BenchmarkDotNet v0.15.2, Windows 10 (10.0.19045.5965/22H2/2022Update)
 Intel Core i7-6820HQ CPU 2.70GHz (Max: 2.71GHz) (Skylake), 1 CPU, 8 logical and 4 physical cores
 .NET SDK 9.0.301
@@ -72,18 +71,17 @@ public List<Transaction> ProcessTransactions(List<Transaction> transactions)
     
     return result.ToList();
 }
-
+```
 
 Autres Pistes
    🏊 Pooling mémoire : Utiliser ArrayPool<Transaction>
    ⏱️ Benchmarks complémentaires :
         
-     ``èè
+```csharp    
         [Params(10, 100, 1000, 10000)] 
         public int BatchSize { get; set; }
-        ```
-        
-    🔄 Version asynchrone : Si réintégration d'appels API externes
+```      
+   🔄 Version asynchrone : Si réintégration d'appels API externes
 
 
 📈 Conclusion
