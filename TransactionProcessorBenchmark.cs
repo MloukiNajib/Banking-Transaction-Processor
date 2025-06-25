@@ -15,6 +15,9 @@ public class TransactionProcessorBenchmark
     private List<Transaction> _veryLargeBatch;
     private TransactionProcessor _processor;
 
+    [Params(4, 1000, 100000)]
+    public int BatchSize { get; set; }
+
     [GlobalSetup]
     public void Setup()
     {
@@ -30,13 +33,19 @@ public class TransactionProcessorBenchmark
 
     }
 
-    [Benchmark(Baseline = true, Description = "Small batch")]
-    public List<Transaction> ProcessSmallBatch() => _processor.ProcessTransactions(_smallBatch);
+    [Benchmark]
+    public List<Transaction> ProcessBatch() =>
+        _processor.ProcessTransactions(GetBatchForCurrentSize());
 
-    [Benchmark(Description = "Large batch")]
-    public List<Transaction> ProcessLargeBatch() => _processor.ProcessTransactions(_largeBatch);
-
-    [Benchmark(Description = "Very large batch")]
-    public List<Transaction> ProcessVeryLargeBatch() => _processor.ProcessTransactions(_veryLargeBatch);
+    private List<Transaction> GetBatchForCurrentSize()
+    {
+        return BatchSize switch
+        {
+            4 => _smallBatch,
+            1000 => _largeBatch,
+            100000 => _veryLargeBatch,
+            _ => throw new NotImplementedException()
+        };
+    }
 
 }

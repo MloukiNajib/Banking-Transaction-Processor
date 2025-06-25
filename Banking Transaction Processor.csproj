@@ -6,10 +6,12 @@
     <RootNamespace>Banking_Transaction_Processor</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
+	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.2" />
   </ItemGroup>
 
 </Project>

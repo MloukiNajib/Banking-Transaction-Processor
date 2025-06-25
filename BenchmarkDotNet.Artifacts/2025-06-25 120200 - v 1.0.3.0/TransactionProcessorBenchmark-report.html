@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>TransactionProcessorBenchmark-20250625-122452</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.2, Windows 10 (10.0.19045.5965/22H2/2022Update)
+Intel Core i7-6820HQ CPU 2.70GHz (Max: 2.71GHz) (Skylake), 1 CPU, 8 logical and 4 physical cores
+.NET SDK 9.0.301
+  [Host]   : .NET 9.0.6 (9.0.625.26613), X64 RyuJIT AVX2
+  .NET 9.0 : .NET 9.0.6 (9.0.625.26613), X64 RyuJIT AVX2
+</code></pre>
+<pre><code>Job=.NET 9.0  Runtime=.NET 9.0  
+</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>BatchSize</th><th>Mean   </th><th>Error  </th><th>StdDev </th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>ProcessBatch</td><td>4</td><td>8.128 &mu;s</td><td>0.1457 &mu;s</td><td>0.1217 &mu;s</td><td>1.00</td><td>0.02</td><td>2.0752</td><td>-</td><td>-</td><td>8.48 KB</td><td>1.00</td>
+</tr><tr><td>ProcessBatch</td><td>1000</td><td>224.559 &mu;s</td><td>3.6946 &mu;s</td><td>3.4559 &mu;s</td><td>1.00</td><td>0.02</td><td>55.6641</td><td>14.6484</td><td>-</td><td>222.74 KB</td><td>1.00</td>
+</tr><tr><td>ProcessBatch</td><td>100000</td><td>59,578.654 &mu;s</td><td>1,189.4268 &mu;s</td><td>3,070.2907 &mu;s</td><td>1.00</td><td>0.07</td><td>2750.0000</td><td>1750.0000</td><td>500.0000</td><td>20553.04 KB</td><td>1.00</td>
+</tr></tbody></table>
+</body>
+</html>
