@@ -13,17 +13,17 @@ Job=.NET 9.0  Runtime=.NET 9.0
 |-------------- |------------:|------------:|------------:|-------:|--------:|--------:|-------:|----------:|------------:|
 | &#39;Small batch&#39; |    121.6 ns |     1.48 ns |     1.15 ns |   1.00 |    0.01 |  0.0899 |      - |     376 B |        1.00 |
 | &#39;Large batch&#39; | 86,121.5 ns | 1,593.54 ns | 2,662.44 ns | 708.25 |   22.54 | 34.0576 | 4.8828 |  142904 B |      380.06 |
-
+```
 
 # Analyse des Résultats du Benchmark
 
 ## 📊 Résumé des Performances
-
+```
 | Méthode         | Temps Moyen | Erreur      | Écart-Type  | Ratio  | Allocation Mémoire |
 |-----------------|-------------|-------------|-------------|--------|--------------------|
 | `Small batch`   | 121.6 ns    | ± 1.48 ns   | 1.15 ns     | 1.00   | 376 B              |
 | `Large batch`   | 86,121.5 ns | ± 1,593 ns  | 2,662 ns    | 708.25 | 142,904 B          |
-
+```
 ## 🔍 Points Clés
 
 ### Petit lot (4 transactions)
@@ -41,13 +41,13 @@ Job=.NET 9.0  Runtime=.NET 9.0
 - ⚠️ Légère surcharge mémoire pour les gros lots
 
 ## 🛠️ Impact des Optimisations
-
+```
 | Optimisation                          | Bénéfice Mesuré                          |
 |---------------------------------------|------------------------------------------|
 | Suppression de `Thread.Sleep`         | Temps réaliste (ns/µs vs ms)             |
 | `Dictionary` pour les taux de change  | Recherche O(1) + meilleure maintenabilité|
 | Pré-allocation des listes             | Réduction des réallocations mémoire      |
-
+```
 ## 🚀 Recommandations
 
 ### Optimisation Parallèle (Exemple)
@@ -73,10 +73,12 @@ public List<Transaction> ProcessTransactions(List<Transaction> transactions)
 Autres Pistes
    🏊 Pooling mémoire : Utiliser ArrayPool<Transaction>
    ⏱️ Benchmarks complémentaires :
+        
         ```csharp
         [Params(10, 100, 1000, 10000)] 
         public int BatchSize { get; set; }
         ```
+        
     🔄 Version asynchrone : Si réintégration d'appels API externes
 
 
