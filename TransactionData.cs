@@ -15,7 +15,30 @@
                 AccountFrom = "FR1234567890",
                 AccountTo = "FR0987654321"
             },
-            // ... (garder les autres transactions existantes)
+            new() {
+                TransactionId = "TXN002",
+                Amount = 200.00M,
+                Currency = "EUR",
+                Timestamp = DateTime.Now.AddMinutes(-20),
+                AccountFrom = "FR1234567890",
+                AccountTo = "FR1122334455"
+            },
+            new() {
+                TransactionId = "TXN003",
+                Amount = 15000,
+                Currency = "JPY",
+                Timestamp = DateTime.Now.AddMinutes(-10),
+                AccountFrom = "FR9988776655",
+                AccountTo = "FR1234567890"
+            },
+            new() {
+                TransactionId = "TXN004",
+                Amount = 75.25M,
+                Currency = "GBP",
+                Timestamp = DateTime.Now,
+                AccountFrom = "FR5566778899",
+                AccountTo = "FR9988776655"
+            }
         };
     }
 
