@@ -3,4 +3,6 @@
 ## Context:
 You are given a .NET (C#) application that processes a large batch of financial transactions (e.g., payments, trades, or settlements). The current implementation is slow and inefficient, and your task is to optimize it for performance, memory usage, and correctness.
 
-Initial (Non-Optimized) Code
+### Initial (Non-Optimized) 
+- Code first commit dc89f8226111817b6159990e8bfd179593b05ce6
+
