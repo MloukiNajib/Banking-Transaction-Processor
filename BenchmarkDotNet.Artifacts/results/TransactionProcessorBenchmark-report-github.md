@@ -69,14 +69,14 @@ public List<Transaction> ProcessTransactions(List<Transaction> transactions)
     
     return result.ToList();
 }
-
+```
 Autres Pistes
    🏊 Pooling mémoire : Utiliser ArrayPool<Transaction>
    ⏱️ Benchmarks complémentaires :
         ```csharp
         [Params(10, 100, 1000, 10000)] 
         public int BatchSize { get; set; }
-        ```csharp
+        ```
     🔄 Version asynchrone : Si réintégration d'appels API externes
 
 
