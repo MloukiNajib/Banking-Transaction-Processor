@@ -67,7 +67,9 @@
     private decimal ConvertCurrency(decimal amount, string fromCurrency)
     {
         // Retirer le Thread.Sleep pour le benchmark
+        // Thread.Sleep(10);  // simule un appel API lent
         // (le garder seulement dans une version séparée pour les tests d'intégration)
+
         if (!_exchangeRates.TryGetValue(fromCurrency, out var rate))
         {
             throw new NotSupportedException($"Currency {fromCurrency} is not supported");

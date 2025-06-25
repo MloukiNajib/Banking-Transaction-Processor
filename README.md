@@ -42,3 +42,37 @@ Le code fait exactement la même chose mais est mieux organisé et plus facile à m
 1. Télémétrie avec Stopwatch :
    - Utilisation de `Stopwatch` pour mesurer le temps d'exécution des méthodes critiques.
    - Ajout de logs pour suivre les performances en production.
+
+
+### 6. Benchmarking avec BenchmarkDotNet
+    La meilleure approche pour mesurer les performances précises de votre code est d'utiliser BenchmarkDotNet, un framework de benchmarking puissant pour .NET.
+
+    1. Ajoutez le package NuGet : dotnet add package BenchmarkDotNet
+    2. Créez une classe de benchmark : TransactionProcessorBenchmark.cs
+    3. Exécutez le benchmark : dotnet run -c Release
+    
+    
+### 7. Limitations et considérations BenchMark tool
+    Affichage dans la méthode benchmark : 
+    - TransactionData.DisplayProcessedTransactions et Console.ReadLine() dans la méthode benchmark faussent les mesures
+    - Les opérations d'I/O (Console) ne devraient pas être incluses dans le benchmark
+    Données de test limitées :
+    - Seulement 4 transactions dans les échantillons
+    - Pas de cas de test pour transactions invalides/doublons
+    Sleep dans ConvertCurrency :
+    - Le Thread.Sleep(10) simule un appel API lent mais rend le benchmark peu représentatif des optimisations
+
+### 8. Analyse des Optimisations
+
+1. Suppression du Thread.Sleep :
+- Le temps de traitement est maintenant réaliste (ns/µs au lieu de ms)
+- Permet de mesurer les vraies performances de l'algorithme
+
+2. Utilisation de Dictionary pour les taux de change :
+- Recherche en O(1) au lieu du switch
+- Meilleure maintenabilité pour ajouter de nouvelles devises
+
+3. Initialisation des listes avec capacité :
+- new List<Transaction>(transactions.Count) réduit les réallocations
+- Visible dans la réduction de l'allocation mémoire
+
